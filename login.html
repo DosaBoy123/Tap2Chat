@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tap2Chat – Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-body">
+  <div class="auth-bg">
+    <div class="auth-card">
+      <h1 class="auth-title">Tap2Chat</h1>
+      <h2 class="auth-subtitle">Sign in</h2>
+
+      <div class="auth-field">
+        <label>Username</label>
+        <input id="liUsername" type="text" placeholder="Your username">
+      </div>
+
+      <div class="auth-field">
+        <label>Password</label>
+        <input id="liPassword" type="password" placeholder="Your password">
+      </div>
+
+      <div id="liError" class="auth-error"></div>
+
+      <button id="liBtn" class="auth-btn">Log in</button>
+
+      <p class="auth-switch">
+        Need an account?
+        <a href="signup.html">Create one</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC4RxS1VpdyP3oMPtiJH2nqlA7Y7OM5t-A",
+      authDomain: "tap2chat-13249.firebaseapp.com",
+      databaseURL: "https://tap2chat-13249-default-rtdb.firebaseio.com",
+      projectId: "tap2chat-13249",
+      storageBucket: "tap2chat-13249.firebasestorage.app",
+      messagingSenderId: "109302813848",
+      appId: "1:109302813848:web:7cb0386f29598ec27e2ced"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    const liBtn = document.getElementById("liBtn");
+    const liUsername = document.getElementById("liUsername");
+    const liPassword = document.getElementById("liPassword");
+    const liError = document.getElementById("liError");
+
+    liBtn.onclick = async () => {
+      liError.textContent = "";
+      const username = liUsername.value.trim().toLowerCase();
+      const password = liPassword.value;
+
+      if (!username || !password) {
+        liError.textContent = "Please enter a username and password.";
+        return;
+      }
+
+      const email = username + "@tap2chat.com";
+
+      try {
+        const cred = await auth.signInWithEmailAndPassword(email, password);
+
+        const uid = cred.user.uid;
+        const userRef = db.ref("users/" + uid);
+        const snap = await userRef.get();
+
+        if (!snap.exists()) {
+          const role = username === "superintendent" ? "superintendent" : "user";
+          await userRef.set({
+            username: username,
+            role: role,
+            accent: "#87CEEB"
+          });
+        }
+
+        window.location.href = "index.html";
+      } catch (e) {
+        liError.textContent = e.message;
+      }
+    };
+  </script>
+</body>
+</html>

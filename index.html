@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tap2Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-bg">
+    <div class="chat-shell">
+
+      <aside class="left-bar">
+        <h2 class="logo">Tap2Chat</h2>
+
+        <button id="profileToggle" class="profile-link">Profile</button>
+
+        <div class="user-summary">
+          <div class="avatar-circle"></div>
+          <div>
+            <div id="currentUserLabel" class="user-name">You</div>
+            <div id="roleLabel" class="user-role">User</div>
+          </div>
+        </div>
+
+        <button id="logoutBtn" class="logout-btn">Log out</button>
+      </aside>
+
+      <main class="chat-main">
+        <header class="chat-header">
+          <div>
+            <div class="chat-title">Main Chat</div>
+            <div id="channelLabel" class="chat-subtitle">Everyone</div>
+          </div>
+
+          <div class="channel-select-wrap">
+            <label for="channelSelect">Channel:</label>
+            <select id="channelSelect">
+              <option value="normal">Normal</option>
+              <option value="agent">Tap2Chat Agent</option>
+            </select>
+          </div>
+        </header>
+
+        <section id="messages" class="messages"></section>
+
+        <footer class="input-bar">
+          <input id="messageInput" type="text" placeholder="Type a message… (Win + . for emojis)">
+          <input id="fileInput" type="file" class="file-input">
+          <button id="sendBtn">Send</button>
+        </footer>
+      </main>
+
+      <aside id="superPanel" class="right-bar hidden">
+        <h3>Supervisor View</h3>
+        <div id="superMessages" class="super-messages"></div>
+      </aside>
+
+    </div>
+  </div>
+
+  <div id="profilePanel" class="profile-panel hidden">
+    <div class="profile-card">
+      <div class="profile-header">
+        <h3>Your Profile</h3>
+        <button id="closeProfile" class="close-btn">×</button>
+      </div>
+
+      <label class="profile-label">
+        Display name
+        <input id="profileName" type="text">
+      </label>
+
+      <label class="profile-label">
+        Accent color
+        <input id="accentColor" type="color" value="#87CEEB">
+      </label>
+
+      <p class="profile-hint">
+        Saved to your Tap2Chat account.
+      </p>
+
+      <button id="saveProfile" class="save-btn">Save</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+  <script src="main2.js"></script>
+</body>
+</html>
