@@ -7,14 +7,20 @@
 <body class="center-screen">
   <div class="auth-card">
     <h2>Create Account</h2>
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
-    <input id="username" type="text" placeholder="Username">
+
+    <input id="signupEmail" type="email" placeholder="Email">
+    <input id="signupPassword" type="password" placeholder="Password">
+    <input id="signupUsername" type="text" placeholder="Username">
+
     <label class="file-label">Profile Picture
-      <input id="profilePic" type="file" accept="image/*">
+      <input id="signupPfp" type="file" accept="image/*">
     </label>
+
     <button id="signupBtn" class="blue-btn">Sign Up</button>
-    <p class="switch-link" onclick="window.location='login.html'">Already have an account?</p>
+
+    <p class="switch-link" onclick="window.location='login.html'">
+      Already have an account?
+    </p>
   </div>
 
   <script type="module" src="firebase-config.js"></script>
