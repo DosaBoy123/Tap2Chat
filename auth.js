@@ -1,80 +1,57 @@
-// =========================
-// Cloudinary Config
-// =========================
-const CLOUD_NAME = "debgn5yle";
-const UPLOAD_PRESET = "tap2chat";
+// auth.js
+import { auth } from "./firebase-config-v2.js";
+import { db } from "./firebase-config-v2.js";
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword,
+  updateProfile 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { 
+  doc, 
+  setDoc 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-async function uploadToCloudinary(file) {
-  const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
+// SIGN UP
+const signupBtn = document.getElementById("signupBtn");
+if (signupBtn) {
+  signupBtn.addEventListener("click", async () => {
+    const email = document.getElementById("signupEmail").value;
+    const password = document.getElementById("signupPassword").value;
+    const username = document.getElementById("signupUsername").value;
 
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", UPLOAD_PRESET);
+    try {
+      const userCred = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCred.user;
 
-  const res = await fetch(url, {
-    method: "POST",
-    body: formData
+      await updateProfile(user, { displayName: username });
+
+      await setDoc(doc(db, "users", user.uid), {
+        email,
+        username,
+        createdAt: Date.now()
+      });
+
+      window.location = "chat.html";
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
   });
-
-  const data = await res.json();
-  return data.secure_url;
 }
 
-// =========================
-// Firebase Setup
-// =========================
-import {
-  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  updateProfile
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+// LOGIN
+const loginBtn = document.getElementById("loginBtn");
+if (loginBtn) {
+  loginBtn.addEventListener("click", async () => {
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
 
-import {
-  getFirestore, doc, setDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const auth = getAuth();
-const db = getFirestore();
-
-// =========================
-// Signup
-// =========================
-async function signup() {
-  const email = document.getElementById("signupEmail").value;
-  const password = document.getElementById("signupPassword").value;
-  const username = document.getElementById("signupUsername").value;
-  const file = document.getElementById("signupPfp").files[0];
-
-  const userCred = await createUserWithEmailAndPassword(auth, email, password);
-  const uid = userCred.user.uid;
-
-  let photoURL = "";
-
-  if (file) {
-    photoURL = await uploadToCloudinary(file);
-  }
-
-  await updateProfile(userCred.user, {
-    displayName: username,
-    photoURL
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      window.location = "chat.html";
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
   });
-
-  await setDoc(doc(db, "users", uid), {
-    username,
-    email,
-    photoURL,
-    uid
-  });
-
-  window.location.href = "chat.html";
-}
-
-// =========================
-// Login
-// =========================
-async function login() {
-  const email = document.getElementById("loginEmail").value;
-  const password = document.getElementById("loginPassword").value;
-
-  await signInWithEmailAndPassword(auth, email, password);
-  window.location.href = "chat.html";
 }
