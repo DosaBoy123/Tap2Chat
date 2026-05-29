@@ -4,28 +4,11 @@
   <title>Tap2Chat</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
-<div class="chat-header">
-  <h2>Tap2Chat</h2>
-  <div id="top-call-btn">📹</div>
-</div>
-
-<div id="messages"></div>
-
-<div class="input-area">
-  <input id="messageInput" type="text" placeholder="Type a message...">
-  <button id="sendBtn">Send</button>
-</div>
-
-<!-- Floating Glassy Hexagon Call Button -->
-<div id="hex-call-btn">
-  <div class="hex-highlight"></div>
-  <span class="hex-icon">📹</span>
-</div>
-
-<script type="module" src="firebase-config.js"></script>
-<script type="module" src="main2.js"></script>
-
+<body class="center-screen">
+  <div class="auth-card">
+    <h2>Tap2Chat</h2>
+    <button onclick="window.location='login.html'" class="blue-btn">Login</button>
+    <button onclick="window.location='signup.html'" class="gray-btn">Sign Up</button>
+  </div>
 </body>
 </html>
