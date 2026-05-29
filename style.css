@@ -1,47 +1,47 @@
-/* ===========================
-   GLOBAL RESET + THEME
-=========================== */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
 
 body {
-  background: #f2f2f2;
-  height: 100vh;
-  overflow: hidden;
+  background: #f5f5f5;
+  color: #222;
 }
 
-/* ===========================
-   AUTH PAGES (LOGIN + SIGNUP)
-=========================== */
-.auth-container {
-  width: 350px;
-  margin: 80px auto;
-  padding: 25px;
+/* Dark mode */
+body.dark {
+  background: #121212;
+  color: #eee;
+}
+
+.center-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Auth card */
+.auth-card {
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 25px;
+  width: 320px;
+  border-radius: 14px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.15);
   text-align: center;
 }
 
-.auth-container h1 {
-  font-size: 32px;
-  color: #2196F3;
-  margin-bottom: 10px;
-}
-
-.auth-container input {
+.auth-card input {
   width: 100%;
   padding: 12px;
-  margin: 10px 0;
+  margin: 8px 0;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-.auth-container button {
+.blue-btn {
   width: 100%;
   padding: 12px;
   background: #2196F3;
@@ -49,90 +49,276 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
 }
 
-.auth-container button:hover {
-  background: #0d7cd6;
-}
-
-/* ===========================
-   CHAT HEADER
-=========================== */
-.chat-header {
+.gray-btn {
   width: 100%;
-  height: 60px;
-  background: #2196F3;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  font-size: 20px;
-}
-
-#top-call-btn {
-  font-size: 26px;
+  padding: 12px;
+  background: #ddd;
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
   cursor: pointer;
-  transition: 0.2s;
 }
 
-#top-call-btn:hover {
-  transform: scale(1.15);
+.small-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
 }
 
-/* ===========================
-   MESSAGES AREA
-=========================== */
-#messages {
-  height: calc(100vh - 140px);
-  overflow-y: auto;
-  padding: 15px;
+.switch-link {
+  margin-top: 10px;
+  color: #2196F3;
+  cursor: pointer;
 }
 
-.message {
-  max-width: 70%;
-  padding: 10px 14px;
-  margin: 8px 0;
-  border-radius: 12px;
-  font-size: 15px;
+.file-label {
+  display: block;
+  text-align: left;
+  margin: 10px 0;
+  font-size: 14px;
 }
 
-.me {
+/* Chat header */
+.chat-header {
+  height: 65px;
   background: #2196F3;
   color: white;
-  margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
 }
 
-.them {
-  background: #e0e0e0;
-  color: black;
-  margin-right: auto;
-}
-
-/* ===========================
-   INPUT AREA
-=========================== */
-.input-area {
-  width: 100%;
-  height: 80px;
-  background: white;
+.header-left {
   display: flex;
   align-items: center;
+}
+
+.header-pfp {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px; /* P2 rounded square */
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.status-dot {
+  font-size: 10px;
+  margin-right: 4px;
+}
+
+.status-text {
+  font-size: 12px;
+}
+
+.header-right {
+  display: flex;
+  gap: 8px;
+}
+
+.call-btn, .logout-btn, .icon-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.call-btn {
+  background: white;
+  color: #2196F3;
+}
+
+.logout-btn {
+  background: #ff5252;
+  color: white;
+}
+
+.icon-btn {
+  background: #1976D2;
+  color: white;
+}
+
+/* Chat layout */
+.chat-body {
+  display: flex;
+  height: calc(100vh - 65px);
+}
+
+.sidebar {
+  width: 220px;
+  border-right: 1px solid #ddd;
   padding: 10px;
-  border-top: 1px solid #ccc;
+  background: #fafafa;
+}
+
+body.dark .sidebar {
+  background: #1e1e1e;
+  border-color: #333;
+}
+
+.sidebar h3 {
+  margin-bottom: 10px;
+}
+
+#roomsList {
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+}
+
+.room-item {
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.room-item.active {
+  background: #e3f2fd;
+}
+
+body.dark .room-item.active {
+  background: #263238;
+}
+
+.room-pfp {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px; /* P2 */
+  object-fit: cover;
+}
+
+/* Chat main */
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-top {
+  height: 30px;
+  padding: 4px 10px;
+  font-size: 13px;
+  color: #555;
+}
+
+.typing-indicator {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-style: italic;
+}
+
+/* Messages */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.message-row {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.message-row.me {
+  justify-content: flex-end;
+}
+
+.message-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%; /* P1 circle in chat */
+  object-fit: cover;
+  margin-right: 6px;
+}
+
+.message-row.me .message-avatar {
+  margin-left: 6px;
+  margin-right: 0;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: #e0e0e0;
+  position: relative;
+}
+
+body.dark .message-bubble {
+  background: #333;
+}
+
+.message-row.me .message-bubble {
+  background: #2196F3;
+  color: white;
+}
+
+.message-header {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.message-text {
+  font-size: 14px;
+}
+
+.message-meta {
+  font-size: 11px;
+  margin-top: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-actions {
+  font-size: 11px;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+/* Bottom input */
+.chat-bottom {
+  border-top: 1px solid #ddd;
+  padding: 6px 10px;
+  background: #fafafa;
+}
+
+body.dark .chat-bottom {
+  background: #1e1e1e;
+  border-color: #333;
+}
+
+.media-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.hidden {
+  display: none;
+}
+
+.input-row {
+  display: flex;
+  gap: 6px;
 }
 
 #messageInput {
   flex: 1;
-  padding: 12px;
+  padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-#sendBtn {
-  margin-left: 10px;
-  padding: 12px 18px;
+.send-btn {
+  padding: 10px 16px;
   background: #2196F3;
   color: white;
   border: none;
@@ -140,68 +326,14 @@ body {
   cursor: pointer;
 }
 
-#sendBtn:hover {
-  background: #0d7cd6;
+/* Dark mode tweaks */
+body.dark .auth-card {
+  background: #1e1e1e;
+  color: #eee;
 }
 
-/* ===========================
-   GLASSY HEXAGON CALL BUTTON
-=========================== */
-#hex-call-btn {
-  position: absolute;
-  top: 80px;
-  right: 20px;
-  width: 55px;
-  height: 55px;
-  background: rgba(135, 206, 235, 0.75); /* sky blue glass */
-  backdrop-filter: blur(6px);
-  border: 2px solid #6BB5D4;
-  clip-path: polygon(
-    25% 0%, 75% 0%,
-    100% 50%,
-    75% 100%, 25% 100%,
-    0% 50%
-  );
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  cursor: pointer;
-  animation: hexEnter 0.35s ease-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Curved arc highlight */
-.hex-highlight {
-  position: absolute;
-  top: 3px;
-  width: 70%;
-  height: 10px;
-  background: rgba(255,255,255,0.55);
-  border-radius: 50%;
-  filter: blur(2px);
-}
-
-/* Icon inside hexagon */
-.hex-icon {
-  font-size: 26px;
-  color: white;
-  z-index: 2;
-}
-
-/* ===========================
-   HEXAGON ANIMATION
-=========================== */
-@keyframes hexEnter {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px) rotate(-5deg);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(5px) rotate(3deg);
-  }
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
+body.dark .auth-card input {
+  background: #121212;
+  color: #eee;
+  border-color: #444;
 }
